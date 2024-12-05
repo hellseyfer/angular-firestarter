@@ -14,22 +14,21 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { TaskDialogComponent } from './dialogs/task-dialog.component';
 
 @NgModule({
-  declarations: [
-    BoardsListComponent,
-    BoardComponent,
-    BoardDialogComponent,
-    TaskDialogComponent
-  ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    SharedModule,
-    KanbanRoutingModule,
-    FormsModule,
-    DragDropModule,
-    MatDialogModule,
-    MatButtonToggleModule,
-  ],
-  entryComponents: [BoardDialogComponent, TaskDialogComponent]
+    declarations: [
+        BoardsListComponent,
+        BoardComponent,
+        BoardDialogComponent,
+        TaskDialogComponent
+    ],
+    imports: [
+        CommonModule,
+        RouterModule,
+        SharedModule,
+        KanbanRoutingModule,
+        FormsModule,
+        DragDropModule,
+        MatDialogModule,
+        MatButtonToggleModule,
+    ]
 })
 export class KanbanModule {}
