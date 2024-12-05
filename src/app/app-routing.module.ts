@@ -1,31 +1,33 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { HomePageComponent } from './home-page/home-page.component';
-import { AuthGuard } from './user/auth.guard';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule, InitialNavigation } from "@angular/router";
+import { HomePageComponent } from "./home-page/home-page.component";
+import { AuthGuard } from "./user/auth.guard";
 
 const routes: Routes = [
-  { path: '', component: HomePageComponent },
+  { path: "", component: HomePageComponent },
   {
-    path: 'login',
-    loadChildren: () => import('./user/user.module').then(m => m.UserModule)
+    path: "login",
+    loadChildren: () => import("./user/user.module").then((m) => m.UserModule),
   },
   {
-    path: 'kanban',
+    path: "kanban",
     loadChildren: () =>
-      import('./kanban/kanban.module').then(m => m.KanbanModule),
-    canActivate: [AuthGuard]
+      import("./kanban/kanban.module").then((m) => m.KanbanModule),
+    canActivate: [AuthGuard],
   },
   {
-    path: 'customers',
+    path: "customers",
     loadChildren: () =>
-      import('./customers/customers.module').then(m => m.CustomersModule),
-  }
+      import("./customers/customers.module").then((m) => m.CustomersModule),
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    initialNavigation: 'enabled'
-})],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, {
+      initialNavigation: "enabled" as InitialNavigation,
+    }),
+  ],
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}
