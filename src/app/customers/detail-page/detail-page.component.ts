@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { tap } from 'rxjs/operators';
-import { SeoService } from 'src/app/services/seo.service';
-import { CustomerDataService } from '../customer-data.service';
-import { Observable } from 'rxjs';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { AngularFirestore } from "@angular/fire/compat/firestore";
+import { tap } from "rxjs/operators";
+import { SeoService } from "src/app/services/seo.service";
+import { CustomerDataService } from "../customer-data.service";
+import { Observable } from "rxjs";
 
 @Component({
-  selector: 'app-detail-page',
-  templateUrl: './detail-page.component.html',
-  styleUrls: ['./detail-page.component.scss']
+  selector: "app-detail-page",
+  templateUrl: "./detail-page.component.html",
+  styleUrls: ["./detail-page.component.scss"],
 })
 export class DetailPageComponent implements OnInit {
   customerId: string;
@@ -23,21 +23,20 @@ export class DetailPageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.customerId = this.route.snapshot.paramMap.get('id');
+    this.customerId = this.route.snapshot.paramMap.get("id");
 
     // this.customer = this.db
     //   .collection('customers')
     //   .doc<any>(customerId)
     //   .valueChanges()
-    this.customer = this.data.getCustomer(this.customerId)
-      .pipe(
-        tap(cust =>
-          this.seo.generateTags({
-            title: cust.name,
-            description: cust.bio,
-            image: cust.image,
-          })
-        )
-      );
+    this.customer = this.data.getCustomer(this.customerId).pipe(
+      tap((cust) =>
+        this.seo.generateTags({
+          title: cust?.name,
+          description: cust?.bio,
+          image: cust?.image,
+        })
+      )
+    );
   }
 }
