@@ -1,6 +1,7 @@
 import { Directive, HostListener } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
-import firebase from "firebase/app";
+//import firebase from "firebase/compat/app";
+import { GoogleAuthProvider } from "@angular/fire/auth";
 
 @Directive({
   selector: "[appGoogleSignin]",
@@ -9,7 +10,14 @@ export class GoogleSigninDirective {
   constructor(private afAuth: AngularFireAuth) {}
 
   @HostListener("click")
-  onclick() {
-    this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  async onclick() {
+    try {
+      debugger;
+      const provider = new GoogleAuthProvider();
+      await this.afAuth.signInWithPopup(provider);
+      console.log("User signed in successfully");
+    } catch (error) {
+      console.error("Error during sign-in:", error);
+    }
   }
 }

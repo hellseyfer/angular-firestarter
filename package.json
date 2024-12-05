@@ -39,7 +39,7 @@
     "@nestjs/platform-express": "^6.11.6",
     "@nguniversal/express-engine": "^14.2.3",
     "express": "^4.15.2",
-    "firebase": "^8.6.2",
+    "firebase": "^9.23.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
