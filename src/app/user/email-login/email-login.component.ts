@@ -1,34 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import {
-  FormBuilder,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
   Validators,
-} from '@angular/forms';
-import { AngularFireAuth } from '@angular/fire/auth';
+} from "@angular/forms";
+import { AngularFireAuth } from "@angular/fire/auth";
 
 @Component({
-  selector: 'app-email-login',
-  templateUrl: './email-login.component.html',
-  styleUrls: ['./email-login.component.scss']
+  selector: "app-email-login",
+  templateUrl: "./email-login.component.html",
+  styleUrls: ["./email-login.component.scss"],
 })
 export class EmailLoginComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
 
-  type: 'login' | 'signup' | 'reset' = 'signup';
+  type: "login" | "signup" | "reset" = "signup";
   loading = false;
 
   serverMessage: string;
 
-  constructor(private afAuth: AngularFireAuth, private fb: FormBuilder) {}
+  constructor(
+    private afAuth: AngularFireAuth,
+    private fb: UntypedFormBuilder
+  ) {}
 
   ngOnInit() {
     this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: [
-        '',
-        [Validators.minLength(6), Validators.required]
-      ],
-      passwordConfirm: ['', []]
+      email: ["", [Validators.required, Validators.email]],
+      password: ["", [Validators.minLength(6), Validators.required]],
+      passwordConfirm: ["", []],
     });
   }
 
@@ -37,30 +37,30 @@ export class EmailLoginComponent implements OnInit {
   }
 
   get isLogin() {
-    return this.type === 'login';
+    return this.type === "login";
   }
 
   get isSignup() {
-    return this.type === 'signup';
+    return this.type === "signup";
   }
 
   get isPasswordReset() {
-    return this.type === 'reset';
+    return this.type === "reset";
   }
 
   get email() {
-    return this.form.get('email');
+    return this.form.get("email");
   }
   get password() {
-    return this.form.get('password');
+    return this.form.get("password");
   }
 
   get passwordConfirm() {
-    return this.form.get('passwordConfirm');
+    return this.form.get("passwordConfirm");
   }
 
   get passwordDoesMatch() {
-    if (this.type !== 'signup') {
+    if (this.type !== "signup") {
       return true;
     } else {
       return this.password.value === this.passwordConfirm.value;
@@ -82,7 +82,7 @@ export class EmailLoginComponent implements OnInit {
       }
       if (this.isPasswordReset) {
         await this.afAuth.sendPasswordResetEmail(email);
-        this.serverMessage = 'Check your email';
+        this.serverMessage = "Check your email";
       }
     } catch (err) {
       this.serverMessage = err;
