@@ -12,18 +12,28 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        node-version: [ 20 ]
+        angular-version: [ 16 ]
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20.x'
+    - uses: actions/checkout@v4
+    - name: Install Angular CLI
+      run: npm install -g @angular/cli@${{ matrix.angular-version }}
+
     - name: Install pnpm
-      run: npm install -g pnpm # Install pnpm globally
+      uses: pnpm/action-setup@v4
+      with:
+        version: 9
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'pnpm'
     - name: Install dependencies
-      run: pnpm install --frozen-lockfile # Use pnpm to install dependencies with lockfile integrity
+      run: pnpm install
+
     - name: Build Angular project
       run: pnpm build # Build the project using pnpm
     #- name: Run tests
