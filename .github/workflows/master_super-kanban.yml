@@ -39,7 +39,7 @@ jobs:
     #- name: Run tests
     #  run: pnpm test # Run tests using pnpm
     - name: Zip artifact for deployment
-      run: zip -r release.zip dist/
+      run: zip -r release.zip dist/browser
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v4
