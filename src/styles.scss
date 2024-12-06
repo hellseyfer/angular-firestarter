@@ -11,8 +11,6 @@
 // Define palettes for the theme
 $my-primary: mat.define-palette(mat.$purple-palette, 500);
 $my-accent: mat.define-palette(mat.$green-palette, A200, A100, A400);
-
-// The "warn" palette is optional and defaults to red if not specified.
 $my-warn: mat.define-palette(mat.$red-palette);
 
 // Define a dark theme
