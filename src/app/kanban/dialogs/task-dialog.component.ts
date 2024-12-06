@@ -1,10 +1,10 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { BoardService } from '../board.service';
+import { Component, Inject } from "@angular/core";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { BoardService } from "../board.service";
 
 @Component({
-  selector: 'app-task-dialog',
-  styleUrls: ['./dialog.scss'],
+  selector: "app-task-dialog",
+  styleUrls: ["./dialog.scss"],
   template: `
     <h1 mat-dialog-title>Task</h1>
     <div mat-dialog-content class="content">
@@ -22,14 +22,14 @@ import { BoardService } from '../board.service';
       >
         <mat-button-toggle *ngFor="let opt of labelOptions" [value]="opt">
           <mat-icon [ngClass]="opt">{{
-            opt === 'gray' ? 'check_circle' : 'lens'
+            opt === "gray" ? "check_circle" : "lens"
           }}</mat-icon>
         </mat-button-toggle>
       </mat-button-toggle-group>
     </div>
     <div mat-dialog-actions>
       <button mat-button [mat-dialog-close]="data" cdkFocusInitial>
-        {{ data.isNew ? 'Add Task' : 'Update Task' }}
+        {{ data.isNew ? "Add Task" : "Update Task" }}
       </button>
 
       <app-delete-button
@@ -37,10 +37,10 @@ import { BoardService } from '../board.service';
         *ngIf="!data.isNew"
       ></app-delete-button>
     </div>
-  `
+  `,
 })
 export class TaskDialogComponent {
-  labelOptions = ['purple', 'blue', 'green', 'yellow', 'red', 'gray'];
+  labelOptions = ["purple", "blue", "green", "yellow", "red", "gray"];
 
   constructor(
     public dialogRef: MatDialogRef<TaskDialogComponent>,

@@ -1,14 +1,14 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, Inject } from "@angular/core";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 @Component({
-  selector: 'app-board-dialog',
+  selector: "app-board-dialog",
   template: `
     <h1 mat-dialog-title>Board</h1>
     <div mat-dialog-content>
-    <p>What shall we call this board?</p>
+      <p>What shall we call this board?</p>
       <mat-form-field>
-        <input placeholder="title" matInput [(ngModel)]="data.title" />
+        <input placeholder="Title" matInput [(ngModel)]="data.title" />
       </mat-form-field>
     </div>
     <div mat-dialog-actions>
@@ -17,7 +17,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
         Create
       </button>
     </div>
-  `
+  `,
 })
 export class BoardDialogComponent {
   constructor(
