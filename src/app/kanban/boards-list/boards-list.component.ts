@@ -1,18 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Subscription } from 'rxjs';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
-import { BoardDialogComponent } from '../dialogs/board-dialog.component';
-import { Board } from '../board.model';
-import { BoardService } from '../board.service';
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import { Subscription } from "rxjs";
+import { MatDialog } from "@angular/material/dialog";
+import { BoardDialogComponent } from "../dialogs/board-dialog.component";
+import { Board } from "../board.model";
+import { BoardService } from "../board.service";
 
 @Component({
-  selector: 'app-boards-list',
-  templateUrl: './boards-list.component.html',
-  styleUrls: ['./boards-list.component.scss']
+  selector: "app-boards-list",
+  templateUrl: "./boards-list.component.html",
+  styleUrls: ["./boards-list.component.scss"],
 })
 export class BoardsListComponent implements OnInit, OnDestroy {
-
   boards: Board[];
   sub: Subscription;
 
@@ -21,7 +20,7 @@ export class BoardsListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.sub = this.boardService
       .getUserBoards()
-      .subscribe(boards => (this.boards = boards));
+      .subscribe((boards) => (this.boards = boards));
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -31,15 +30,15 @@ export class BoardsListComponent implements OnInit, OnDestroy {
 
   openBoardDialog(): void {
     const dialogRef = this.dialog.open(BoardDialogComponent, {
-      width: '400px',
-      data: {  }
+      width: "400px",
+      data: {},
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.boardService.createBoard({
           title: result,
-          priority: this.boards.length
+          priority: this.boards.length,
         });
       }
     });
