@@ -15,6 +15,9 @@ import { AngularFireModule } from "@angular/fire/compat";
 import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
 import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 import { ServiceWorkerModule } from "@angular/service-worker";
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [AppComponent, HomePageComponent],
@@ -30,6 +33,9 @@ import { ServiceWorkerModule } from "@angular/service-worker";
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production,
     }),
+    provideFirebaseApp(() => initializeApp({"projectId":"angular-kanban-9875c","appId":"1:651342070437:web:490cfb190d817b8ac1034c","databaseURL":"https://angular-kanban-9875c-default-rtdb.firebaseio.com","storageBucket":"angular-kanban-9875c.firebasestorage.app","apiKey":"AIzaSyCUxatwZD7xKvDohCEK25raP9K45zTiAVo","authDomain":"angular-kanban-9875c.firebaseapp.com","messagingSenderId":"651342070437"})),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,6 +1,5 @@
 import { Directive, HostListener } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
-//import firebase from "firebase/compat/app";
 import { GoogleAuthProvider } from "@angular/fire/auth";
 
 @Directive({
