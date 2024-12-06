@@ -28,7 +28,7 @@ jobs:
     - name: Install dependencies
       run: pnpm install --frozen-lockfile # Use pnpm to install dependencies with lockfile integrity
     - name: Build Angular project
-      run: pnpm build -- --configuration production # Build the project using pnpm
+      run: pnpm build # Build the project using pnpm
     #- name: Run tests
     #  run: pnpm test # Run tests using pnpm
 
