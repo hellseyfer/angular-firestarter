@@ -44,7 +44,7 @@ export class TaskDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<TaskDialogComponent>,
-    private boardService: BoardService,
+    private readonly boardService: BoardService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
