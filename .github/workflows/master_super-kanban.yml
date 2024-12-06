@@ -16,37 +16,21 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-
-    - name: Set up Node.js version
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '20.x'
-    - name: Install angular cli 16
-      run: npm install -g @angular/cli@16
-
-    - name: pnpm install
-      run: |
-        npm install -g pnpm
-
-    - name: pnpm install and build
-      run: |
-        pnpm i
-        npm run build
-
-    - name: Zip artifact for deployment
-      run: zip release.zip ./* -r
-
-    - name: Upload artifact for deployment job
-      uses: actions/upload-artifact@v4
-      with:
-        name: node-app
-        path: release.zip
-
-    - name: Wait for 30 seconds
-      run: sleep 30s
+    - name: Install pnpm
+      run: npm install -g pnpm # Install pnpm globally
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile # Use pnpm to install dependencies with lockfile integrity
+    - name: Build Angular project
+      run: pnpm build -- --configuration production # Build the project using pnpm
+    #- name: Run tests
+    #  run: pnpm test # Run tests using pnpm
 
   deploy:
     runs-on: ubuntu-latest
