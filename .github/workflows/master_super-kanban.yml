@@ -74,5 +74,4 @@ jobs:
       uses: azure/webapps-deploy@v3
       with:
         app-name: 'super-kanban'
-        slot-name: 'Production'
-        package: .
+        package: release.zip
