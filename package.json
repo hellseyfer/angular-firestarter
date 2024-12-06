@@ -16,7 +16,8 @@
     "serve:ssr": "node dist/server",
     "build:client-and-server-bundles": "ng build && ng run firestarter:server:production",
     "dev:ssr": "ng run firestarter:serve-ssr",
-    "prerender": "ng run firestarter:prerender"
+    "prerender": "ng run firestarter:prerender",
+    "watch": "npx http-server -p 8080 -c-1 dist/browser"
   },
   "private": true,
   "dependencies": {
