@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule, InitialNavigation } from "@angular/router";
 import { HomePageComponent } from "./home-page/home-page.component";
 import { AuthGuard } from "./user/auth.guard";
+import { PrivacyPolicyComponent } from "./privacy-policy/privacy-policy.component";
 
 const routes: Routes = [
   { path: "", component: HomePageComponent },
@@ -19,6 +20,10 @@ const routes: Routes = [
     path: "customers",
     loadChildren: () =>
       import("./customers/customers.module").then((m) => m.CustomersModule),
+  },
+  {
+    path: "privacy-policy",
+    component: PrivacyPolicyComponent,
   },
 ];
 
