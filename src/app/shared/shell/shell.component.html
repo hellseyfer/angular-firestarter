@@ -7,7 +7,6 @@
       <a mat-list-item routerLink="/" (click)="drawer.close()">Home</a>
       <a mat-list-item routerLink="/login" (click)="drawer.close()">Login</a>
       <a mat-list-item routerLink="/kanban" (click)="drawer.close()">Kanban</a>
-      <a mat-list-item routerLink="/customers" (click)="drawer.close()">SSR</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -23,8 +22,6 @@
       <span class="fill-space"></span>
       <div *ngIf="!(isHandset$ | async)">
         <a mat-button routerLink="/kanban">🍱 Kanban</a>
-        <a mat-button routerLink="/customers">⚡ SSR</a>
-
         <a mat-button routerLink="/login" *ngIf="!(afAuth.authState | async)">🔑 Login</a>
         <a mat-button routerLink="/login" *ngIf="afAuth.authState | async as user">
           <img class="avatar" [src]="user.photoURL || 'assets/default-user.svg'">
