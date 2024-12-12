@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, inject, OnDestroy } from "@angular/core";
 import { BoardComponent } from "../board/board.component";
 import {
   CdkDrag,
@@ -22,15 +22,14 @@ import { SnackService } from "src/app/services/snack.service";
   standalone: true,
   imports: [SharedModule, BoardComponent, CdkDrag, CdkDragHandle, CdkDropList],
 })
-export class BoardListV2Component {
+export class BoardListV2Component implements OnDestroy {
   boards: Board[];
   sub: Subscription;
   private boardService = inject(BoardService);
   private dialog = inject(MatDialog);
   private snackBarService = inject(SnackService);
 
-  constructor() {}
-  ngOnInit() {
+  constructor() {
     this.sub = this.boardService.boards$.subscribe({
       next: (boards) => {
         this.boards = boards;
@@ -52,7 +51,6 @@ export class BoardListV2Component {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log("The dialog was closed");
       if (result) {
         this.boardService.createBoard({
           title: result,

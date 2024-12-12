@@ -16,25 +16,14 @@ import { Subscription } from "rxjs";
   providedIn: "root",
 })
 export class AuthService implements OnDestroy {
-  constructor() {
-    this.authStateSubscription = this.authState$.subscribe(
-      (aUser: User | null) => {
-        //handle auth state changes here. Note, that user will be null if there is no currently logged in user.
-        console.log("Auth state changed:", aUser);
-        this.currentUser = aUser;
-      }
-    );
-  }
   private auth: Auth = inject(Auth);
   authState$ = authState(this.auth);
   authStateSubscription: Subscription;
-  currentUser: User | null = null;
 
   async googleSignIn(): Promise<void> {
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(this.auth, provider);
-      console.log("Signed in successfully:", result.user);
     } catch (error) {
       console.error("Error during Google sign-in:", error);
     }
@@ -50,10 +39,6 @@ export class AuthService implements OnDestroy {
         this.auth,
         email,
         password
-      );
-      console.log(
-        "Signed in successfully with email and password:",
-        userCredential.user
       );
     } catch (error) {
       console.error("Error during email and password sign-in:", error);
@@ -71,7 +56,6 @@ export class AuthService implements OnDestroy {
         email,
         password
       );
-      console.log("User created successfully:", userCredential.user);
     } catch (error) {
       console.error("Error during user creation:", error);
     }
@@ -81,7 +65,6 @@ export class AuthService implements OnDestroy {
   async sendPasswordResetEmail(email: string): Promise<void> {
     try {
       await sendPasswordResetEmail(this.auth, email);
-      console.log("Password reset email sent successfully.");
     } catch (error) {
       console.error("Error sending password reset email:", error);
     }
@@ -91,7 +74,6 @@ export class AuthService implements OnDestroy {
   async signOut(): Promise<void> {
     try {
       await firebaseSignOut(this.auth);
-      console.log("User signed out successfully.");
     } catch (error) {
       console.error("Error during sign-out:", error);
     }

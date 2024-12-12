@@ -1,4 +1,10 @@
-import { Component, Inject } from "@angular/core";
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Inject,
+  ViewChild,
+} from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { BoardService } from "../board.service";
 import { SharedModule } from "src/app/shared/shared.module";
@@ -10,14 +16,17 @@ import { DeleteButtonComponent } from "src/app/shared/delete-button/delete-butto
   standalone: true,
   imports: [SharedModule, MatButtonToggleModule, DeleteButtonComponent],
   template: `
-    <h1 mat-dialog-title>Task</h1>
-    <div mat-dialog-content class="content">
+    <h2 mat-dialog-title>Task</h2>
+    <mat-dialog-content class="content">
+      <p>tap shift + enter for a new line</p>
       <mat-form-field>
         <textarea
+          cdkFocusInitial
           class="task-description"
           placeholder="Task description"
           matInput
           [(ngModel)]="data.task.description"
+          (keydown.enter)="onCreate()"
         ></textarea>
       </mat-form-field>
       <br />
@@ -28,14 +37,9 @@ import { DeleteButtonComponent } from "src/app/shared/delete-button/delete-butto
           }}</mat-icon>
         </mat-button-toggle>
       </mat-button-toggle-group>
-    </div>
-    <div mat-dialog-actions>
-      <button
-        color="accent"
-        mat-button
-        [mat-dialog-close]="data"
-        cdkFocusInitial
-      >
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button color="accent" mat-button [mat-dialog-close]="data">
         {{ data.isNew ? "Add Task" : "Update Task" }}
       </button>
 
@@ -46,7 +50,7 @@ import { DeleteButtonComponent } from "src/app/shared/delete-button/delete-butto
         (delete)="handleTaskDelete()"
         *ngIf="!data.isNew"
       ></app-delete-button>
-    </div>
+    </mat-dialog-actions>
   `,
 })
 export class TaskDialogComponent {
@@ -57,6 +61,11 @@ export class TaskDialogComponent {
     private readonly boardService: BoardService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
+
+  onCreate(): void {
+    // Handle the create action, like closing the dialog or further processing
+    this.dialogRef.close(this.data); // Or whatever you want to do on "Create"
+  }
 
   onNoClick(): void {
     this.dialogRef.close();

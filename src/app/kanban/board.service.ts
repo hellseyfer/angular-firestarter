@@ -1,6 +1,4 @@
 import { inject, Injectable } from "@angular/core";
-import { Auth, authState, User } from "@angular/fire/auth";
-import { catchError, map, switchMap } from "rxjs/operators";
 import { Board, Task } from "./board.model";
 import {
   addDoc,
@@ -12,16 +10,15 @@ import {
   doc,
   DocumentReference,
   Firestore,
-  getDocs,
-  onSnapshot,
   orderBy,
   query,
   updateDoc,
   where,
   writeBatch,
 } from "@angular/fire/firestore";
-import { from, Observable, of, Subscription } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import { AuthService } from "../services/auth.service";
+import { User } from "@angular/fire/auth";
 
 @Injectable({
   providedIn: "root",
@@ -29,30 +26,36 @@ import { AuthService } from "../services/auth.service";
 export class BoardService {
   private firestore: Firestore = inject(Firestore);
   private authService: AuthService = inject(AuthService);
-  private afAuth = inject(Auth);
   boardCollectionRef: CollectionReference;
-  boards$: Observable<Board[]>;
+  boards$ = new BehaviorSubject<Board[]>([]);
+  currentUser: User | undefined;
   // user
   constructor() {
-    // get reference
     this.boardCollectionRef = collection(this.firestore, "boards");
-    const uidUser = this.afAuth.currentUser.uid;
-    // get documents (data) from the collection using collectionData
-    const q = query(
-      this.boardCollectionRef,
-      where("uid", "==", uidUser),
-      orderBy("priority")
-    );
-    this.boards$ = collectionData(q, { idField: "id" });
+    this.authService.authState$.subscribe((user) => {
+      if (user) {
+        this.currentUser = user;
+        // get documents (data) from the collection using collectionData
+        const q = query(
+          this.boardCollectionRef,
+          where("uid", "==", user.uid),
+          orderBy("priority")
+        );
+        collectionData(q, { idField: "id" }).subscribe((boards) => {
+          this.boards$.next(boards); // Update the BehaviorSubject with the new boards data
+        });
+      } else {
+        this.boards$.next([]); // Clear the boards if no user is authenticated
+      }
+    });
   }
   /**
    * Creates a new board for the current user
    */
   async createBoard(data: Board) {
-    const user = await this.afAuth.currentUser;
     const dataToSave = {
       ...data,
-      uid: user.uid,
+      uid: this.currentUser.uid,
       tasks: [{ description: "Hello!", label: "yellow" }],
     };
     addDoc(this.boardCollectionRef, <Board>dataToSave).then(

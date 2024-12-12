@@ -1,4 +1,10 @@
-import { Component, Inject } from "@angular/core";
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Inject,
+  ViewChild,
+} from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { SharedModule } from "src/app/shared/shared.module";
 
@@ -8,25 +14,26 @@ import { SharedModule } from "src/app/shared/shared.module";
   standalone: true,
   imports: [SharedModule],
   template: `
-    <h1 mat-dialog-title>Board</h1>
-    <div mat-dialog-content>
+    <h2 mat-dialog-title>Board</h2>
+    <mat-dialog-content class="content">
       <mat-form-field>
         <mat-label>What shall we call this board?</mat-label>
-        <input placeholder="Title" matInput [(ngModel)]="data.title" />
+        <input
+          cdkFocusInitial
+          placeholder="Title"
+          matInput
+          [(ngModel)]="data.title"
+          (keydown.enter)="onCreate()"
+        />
       </mat-form-field>
-    </div>
+    </mat-dialog-content>
 
-    <div mat-dialog-actions>
-      <button
-        mat-button
-        color="accent"
-        [mat-dialog-close]="data.title"
-        cdkFocusInitial
-      >
+    <mat-dialog-actions>
+      <button mat-button color="accent" [mat-dialog-close]="data.title">
         Create
       </button>
       <button mat-button (click)="onNoClick()">Cancel</button>
-    </div>
+    </mat-dialog-actions>
   `,
 })
 export class BoardDialogComponent {
@@ -34,6 +41,11 @@ export class BoardDialogComponent {
     public dialogRef: MatDialogRef<BoardDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
+
+  onCreate(): void {
+    // Handle the create action, like closing the dialog or further processing
+    this.dialogRef.close(this.data.title); // Or whatever you want to do on "Create"
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
