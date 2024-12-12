@@ -1,9 +1,12 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from "@angular/core";
+import { SharedModule } from "../shared.module";
 
 @Component({
-  selector: 'app-delete-button',
-  templateUrl: './delete-button.component.html',
-  styleUrls: ['./delete-button.component.scss']
+  selector: "app-delete-button",
+  templateUrl: "./delete-button.component.html",
+  styleUrls: ["./delete-button.component.scss"],
+  standalone: true,
+  imports: [SharedModule],
 })
 export class DeleteButtonComponent {
   canDelete: boolean;
@@ -22,6 +25,4 @@ export class DeleteButtonComponent {
     this.delete.emit(true);
     this.canDelete = false;
   }
-
-
 }

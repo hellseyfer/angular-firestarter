@@ -1,82 +1,105 @@
-import { Injectable } from "@angular/core";
-import { AngularFireAuth } from "@angular/fire/compat/auth";
-import { AngularFirestore } from "@angular/fire/compat/firestore";
-import firebase from "firebase/compat/app";
-import { switchMap } from "rxjs/operators";
+import { inject, Injectable } from "@angular/core";
+import { Auth, authState, User } from "@angular/fire/auth";
+import { catchError, map, switchMap } from "rxjs/operators";
 import { Board, Task } from "./board.model";
+import {
+  addDoc,
+  arrayRemove,
+  collection,
+  collectionData,
+  CollectionReference,
+  deleteDoc,
+  doc,
+  DocumentReference,
+  Firestore,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
+  updateDoc,
+  where,
+  writeBatch,
+} from "@angular/fire/firestore";
+import { from, Observable, of, Subscription } from "rxjs";
+import { AuthService } from "../services/auth.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class BoardService {
-  constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) {}
-
+  private firestore: Firestore = inject(Firestore);
+  private authService: AuthService = inject(AuthService);
+  private afAuth = inject(Auth);
+  boardCollectionRef: CollectionReference;
+  boards$: Observable<Board[]>;
+  // user
+  constructor() {
+    // get reference
+    this.boardCollectionRef = collection(this.firestore, "boards");
+    const uidUser = this.afAuth.currentUser.uid;
+    // get documents (data) from the collection using collectionData
+    const q = query(
+      this.boardCollectionRef,
+      where("uid", "==", uidUser),
+      orderBy("priority")
+    );
+    this.boards$ = collectionData(q, { idField: "id" });
+  }
   /**
    * Creates a new board for the current user
    */
   async createBoard(data: Board) {
     const user = await this.afAuth.currentUser;
-    return this.db.collection("boards").add({
+    const dataToSave = {
       ...data,
       uid: user.uid,
       tasks: [{ description: "Hello!", label: "yellow" }],
-    });
-  }
-
-  /**
-   * Get all boards owned by current user
-   */
-  getUserBoards() {
-    return this.afAuth.authState.pipe(
-      switchMap((user) => {
-        if (user) {
-          return this.db
-            .collection<Board>("boards", (ref) =>
-              ref.where("uid", "==", user?.uid).orderBy("priority")
-            )
-            .valueChanges({ idField: "id" });
-        } else {
-          return [];
-        }
-      })
-      // map(boards => boards.sort((a, b) => a.priority - b.priority))
+    };
+    addDoc(this.boardCollectionRef, <Board>dataToSave).then(
+      (documentReference: DocumentReference) => {
+        // the documentReference provides access to the newly created document
+      }
     );
   }
 
   /**
    * Run a batch write to change the priority of each board for sorting
    */
-  sortBoards(boards: Board[]) {
-    const db = firebase.firestore();
-    const batch = db.batch();
-    const refs = boards.map((b) => db.collection("boards").doc(b.id));
-    refs.forEach((ref, idx) => batch.update(ref, { priority: idx }));
-    batch.commit();
-  }
+  async sortBoards(boards: Board[]) {
+    const batch = writeBatch(this.firestore); // Create a Firestore batch using the injected Firestore instance
 
+    // Iterate over each board and directly get its document reference
+    boards.forEach((board, idx) => {
+      const boardRef = doc(this.firestore, "boards", board.id); // Get the document reference directly by board ID
+      batch.update(boardRef, { priority: idx }); // Add the update to the batch
+    });
+
+    // Commit the batch
+    await batch.commit(); // Commit the batch to Firestore
+  }
   /**
    * Delete board
    */
   deleteBoard(boardId: string) {
-    return this.db.collection("boards").doc(boardId).delete();
+    const boardRef = doc(this.firestore, "boards", boardId);
+    return deleteDoc(boardRef);
   }
 
   /**
-   * Updates the tasks on board
+   * Updates the tasks on the board
    */
   updateTasks(boardId: string, tasks: Task[]) {
-    return this.db.collection("boards").doc(boardId).update({ tasks });
+    const boardRef = doc(this.firestore, "boards", boardId);
+    return updateDoc(boardRef, { tasks });
   }
 
   /**
-   * Remove a specifc task from the board
+   * Remove a specific task from the board
    */
   removeTask(boardId: string, task: Task) {
-    return this.db
-      .collection("boards")
-      .doc(boardId)
-      .update({
-        tasks: firebase.firestore.FieldValue.arrayRemove(task),
-      });
+    const boardRef = doc(this.firestore, "boards", boardId);
+    return updateDoc(boardRef, {
+      tasks: arrayRemove(task),
+    });
   }
 }

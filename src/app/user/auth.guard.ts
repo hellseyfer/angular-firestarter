@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
-import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { SnackService } from "../services/snack.service";
+import { AuthService } from "../services/auth.service";
 
 @Injectable({
   providedIn: "root",
 })
-export class AuthGuard  {
-  constructor(private afAuth: AngularFireAuth, private snack: SnackService) {}
+export class AuthGuard {
+  constructor(public afAuth: AuthService, private snack: SnackService) {}
   async canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot

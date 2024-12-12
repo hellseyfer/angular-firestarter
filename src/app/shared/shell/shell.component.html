@@ -20,11 +20,11 @@
       <span class="logo" routerLink="/">🔥 Súper Kanban</span>
 
       <span class="fill-space"></span>
-      <div *ngIf="!(isHandset$ | async)">
+      <div class="links" *ngIf="!(isHandset$ | async)">
         <a mat-button routerLink="/kanban">🍱 Kanban</a>
-        <a mat-button routerLink="/login" *ngIf="!(afAuth.authState | async)">🔑 Login</a>
-        <a mat-button routerLink="/login" *ngIf="afAuth.authState | async as user">
-          <img class="avatar" [src]="user.photoURL || 'assets/default-user.svg'">
+        <a mat-button routerLink="/login" *ngIf="!user">🔑 Login</a>
+        <a mat-button routerLink="/login" *ngIf="user" class="profile-link">
+          <img class="avatar" [src]="user.photoURL ? user.photoURL : 'assets/default-user.svg'" alt="profile">
           Profile
         </a>
 

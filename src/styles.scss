@@ -15,6 +15,7 @@ $dark-theme: mat.define-dark-theme(
     color: (
       primary: $my-primary,
       accent: $my-accent,
+      warn: $my-warn,
     ),
     // Only include `typography` and `density` in the default dark theme.
     typography: mat.define-typography-config(),

@@ -2,7 +2,8 @@ import { Component } from "@angular/core";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { Observable } from "rxjs";
 import { map, shareReplay } from "rxjs/operators";
-import { AngularFireAuth } from "@angular/fire/compat/auth";
+import { AuthService } from "src/app/services/auth.service";
+import { User } from "@angular/fire/auth";
 
 @Component({
   selector: "app-shell",
@@ -17,8 +18,14 @@ export class ShellComponent {
       shareReplay()
     );
 
+  user: User | null = null;
   constructor(
     private breakpointObserver: BreakpointObserver,
-    public afAuth: AngularFireAuth
-  ) {}
+    public afAuth: AuthService
+  ) {
+    this.afAuth.authState$.subscribe({
+      next: (user) => (this.user = user),
+      error: (err) => console.log(err),
+    });
+  }
 }

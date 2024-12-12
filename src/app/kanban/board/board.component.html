@@ -10,18 +10,8 @@
     </mat-card-subtitle>
   </mat-card-header>
 
-  <div
-    class="tasks"
-    cdkDropList
-    cdkDropListOrientation="vertical"
-    (cdkDropListDropped)="taskDrop($event)"
-  >
-    <div
-      class="inner-card"
-      cdkDrag
-      *ngFor="let task of board.tasks; let i = index"
-      (click)="openDialog(task, i)"
-    >
+  <!--   <div class="tasks" cdkDropList cdkDropListOrientation="vertical" (cdkDropListDropped)="taskDrop($event)">
+    <div class="inner-card" cdkDrag *ngFor="let task of board.tasks; let i = index" (click)="openDialog(task, i)">
       <mat-card [ngClass]="task.label"> {{ task.description }} </mat-card>
     </div>
 
@@ -30,5 +20,21 @@
     </button>
 
     <app-delete-button (delete)="handleDelete()"></app-delete-button>
+  </div> -->
+
+  <div class="tasks" cdkDropList cdkDragLockAxis="y" [cdkDropListData]="board.tasks"
+    (cdkDropListDropped)="taskDrop($event)">
+    <div class="inner-card" *ngFor="let task of board.tasks; let i = index" (click)="openDialog(task, i)" cdkDrag>
+      <mat-card [ngClass]="task.label">
+        <mat-card-content>{{ task.description }} </mat-card-content>
+      </mat-card>
+    </div>
+
+    <button mat-stroked-button (click)="openDialog()">
+      <mat-icon>add</mat-icon>
+    </button>
+
+    <app-delete-button (delete)="handleDelete()"></app-delete-button>
   </div>
+
 </mat-card>

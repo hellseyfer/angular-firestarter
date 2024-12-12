@@ -1,21 +1,31 @@
 import { Component, Inject } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { SharedModule } from "src/app/shared/shared.module";
 
 @Component({
   selector: "app-board-dialog",
+  styleUrls: ["./dialog.scss"],
+  standalone: true,
+  imports: [SharedModule],
   template: `
     <h1 mat-dialog-title>Board</h1>
     <div mat-dialog-content>
-      <p>What shall we call this board?</p>
       <mat-form-field>
+        <mat-label>What shall we call this board?</mat-label>
         <input placeholder="Title" matInput [(ngModel)]="data.title" />
       </mat-form-field>
     </div>
+
     <div mat-dialog-actions>
-      <button mat-button (click)="onNoClick()">Cancel</button>
-      <button mat-button [mat-dialog-close]="data.title" cdkFocusInitial>
+      <button
+        mat-button
+        color="accent"
+        [mat-dialog-close]="data.title"
+        cdkFocusInitial
+      >
         Create
       </button>
+      <button mat-button (click)="onNoClick()">Cancel</button>
     </div>
   `,
 })

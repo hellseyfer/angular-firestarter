@@ -1,19 +1,42 @@
 .content {
-    overflow: hidden;
-    height: auto;
-    padding: 20px;
-    width: 100%;
+  overflow: hidden;
+  height: auto;
+  padding: 20px;
+  width: 100%;
 }
 
 mat-form-field {
-    width: 100%;
-  }
+  width: 100%;
+}
 
-textarea { display: block; width: 100%; }
+textarea,
+input {
+  display: block;
+  width: 100%;
+  color: white;
+}
 
-.blue { color: #71deff; }
-.green { color: #36e9b6; }
-.yellow { color: #ffcf44; }
-.purple { color: #b15cff; }
-.gray { color: gray; }
-.red { color: #e74a4a; }
+textarea.task-description {
+  height: auto;
+  min-height: 350px; /* Initial height */
+  resize: vertical; /* Allow the user to resize vertically */
+}
+
+.blue {
+  color: #71deff;
+}
+.green {
+  color: #36e9b6;
+}
+.yellow {
+  color: #ffcf44;
+}
+.purple {
+  color: #b15cff;
+}
+.gray {
+  color: gray;
+}
+.red {
+  color: #e74a4a;
+}

@@ -17,11 +17,6 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: "customers",
-    loadChildren: () =>
-      import("./customers/customers.module").then((m) => m.CustomersModule),
-  },
-  {
     path: "privacy-policy",
     component: PrivacyPolicyComponent,
   },

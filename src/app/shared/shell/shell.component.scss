@@ -41,5 +41,15 @@ i {
 .avatar {
   width: 1.75em;
   border-radius: 50%;
-  margin: 0 10px 5px;
+}
+
+.profile-link {
+  display: flex;
+  align-items: center; /* Vertically aligns the avatar and text */
+  gap: 8px; /* Adds space between the avatar and text, adjust as needed */
+}
+
+.links {
+  display: flex;
+  flex-direction: row;
 }

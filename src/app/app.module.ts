@@ -11,40 +11,30 @@ import { SharedModule } from "./shared/shared.module";
 import { UserModule } from "./user/user.module";
 
 // Firebase imports
-import { AngularFireModule } from "@angular/fire/compat";
-import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
-import { AngularFireAuthModule } from "@angular/fire/compat/auth";
+import { FirestoreModule } from "@angular/fire/firestore";
+import { AuthModule } from "@angular/fire/auth";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
 import { getAuth, provideAuth } from "@angular/fire/auth";
 import { getFirestore, provideFirestore } from "@angular/fire/firestore";
 import { PrivacyPolicyComponent } from "./privacy-policy/privacy-policy.component";
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [AppComponent, HomePageComponent, PrivacyPolicyComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: "serverApp" }),
+    HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
     UserModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
-    AngularFireAuthModule,
+    FirestoreModule,
+    AuthModule,
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production,
     }),
-    provideFirebaseApp(() =>
-      initializeApp({
-        projectId: "angular-kanban-9875c",
-        appId: "1:651342070437:web:490cfb190d817b8ac1034c",
-        databaseURL: "https://angular-kanban-9875c-default-rtdb.firebaseio.com",
-        storageBucket: "angular-kanban-9875c.firebasestorage.app",
-        apiKey: "AIzaSyCUxatwZD7xKvDohCEK25raP9K45zTiAVo",
-        authDomain: "angular-kanban-9875c.firebaseapp.com",
-        messagingSenderId: "651342070437",
-      })
-    ),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
   ],

@@ -1,14 +1,33 @@
 import { Component, Input } from "@angular/core";
-import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  CdkDropListGroup,
+  moveItemInArray,
+} from "@angular/cdk/drag-drop";
 import { TaskDialogComponent } from "../dialogs/task-dialog.component";
 import { MatDialog } from "@angular/material/dialog";
 import { BoardService } from "../board.service";
 import { Task } from "../board.model";
+import { CommonModule, NgFor } from "@angular/common";
+import { SharedModule } from "src/app/shared/shared.module";
+import { DeleteButtonComponent } from "src/app/shared/delete-button/delete-button.component";
 
 @Component({
   selector: "app-board",
   templateUrl: "./board.component.html",
   styleUrls: ["./board.component.scss"],
+  standalone: true,
+  imports: [
+    CdkDropListGroup,
+    CdkDropList,
+    NgFor,
+    CdkDrag,
+    CommonModule,
+    SharedModule,
+    DeleteButtonComponent,
+  ],
 })
 export class BoardComponent {
   @Input() board;

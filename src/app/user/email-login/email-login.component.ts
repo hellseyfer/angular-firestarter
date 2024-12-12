@@ -4,7 +4,7 @@ import {
   UntypedFormGroup,
   Validators,
 } from "@angular/forms";
-import { AngularFireAuth } from "@angular/fire/compat/auth";
+import { AuthService } from "src/app/services/auth.service";
 
 @Component({
   selector: "app-email-login",
@@ -20,7 +20,7 @@ export class EmailLoginComponent implements OnInit {
   serverMessage: string;
 
   constructor(
-    private afAuth: AngularFireAuth,
+    private afAuth: AuthService,
     private fb: UntypedFormBuilder
   ) {}
 

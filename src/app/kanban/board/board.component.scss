@@ -1,32 +1,65 @@
-.outer-card {
-    margin: 10px;
-    min-width: 300px;
-    max-width: 300px;
-    padding: 10px;
-    background: #212121;
-  }
-  
-  .inner-card {
-      margin: 5px 0;
-      cursor: pointer;
-  }
+.tasks {
+  display: flex;
+  flex-direction: column; /* Stacks cards vertically */
+  gap: 10px; /* Space between the cards */
+}
 
-  .cdk-drag-animating {
-    transition: transform 300ms ease;
-  }
-  
-  .tasks.cdk-drop-list-dragging .cdk-drag {
-    transition: transform 300ms ease;
-  }
+.outer-card {
+  margin: 10px;
+  min-width: 300px;
+  max-width: 300px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column; /* Ensures that content inside grows vertically */
+  flex-grow: 1; /* Allows the card to grow as content inside it grows */
+}
+
+.inner-card {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column; /* Ensures the content inside the card grows vertically */
+  flex-grow: 1; /* Makes the card grow based on its content */
+}
+
+mat-card-content {
+  overflow: hidden; /* Hides any content that overflows */
+  text-overflow: ellipsis; /* Adds the ellipsis (...) */
+  white-space: nowrap; /* Prevents the text from wrapping to a new line */
+  display: block; /* Ensures the content is treated as a block element */
+}
+
+.cdk-drag-animating {
+  transition: transform 300ms ease;
+}
+
+.tasks.cdk-drop-list-dragging .cdk-drag {
+  transition: transform 300ms ease;
+}
 
 .cdk-drag-placeholder {
   opacity: 0.5;
 }
 
-.blue { background: #71deff; color: black; }
-.green { background: #36e9b6; color: black;  }
-.yellow { background: #ffcf44; color: black; }
-.purple { background: #b15cff; }
-.red { background: #e74a4a; }
+.blue {
+  background: #71deff;
+  color: black;
+}
+.green {
+  background: #36e9b6;
+  color: black;
+}
+.yellow {
+  background: #ffcf44;
+  color: black;
+}
+.purple {
+  background: #b15cff;
+}
+.red {
+  background: #e74a4a;
+}
 
-.gray { background: gray; text-decoration: line-through; }
+.gray {
+  background: gray;
+  text-decoration: line-through;
+}
