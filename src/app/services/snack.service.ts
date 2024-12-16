@@ -10,8 +10,8 @@ export class SnackService {
   constructor(private snackBar: MatSnackBar, private router: Router) {}
 
   authError() {
-    this.snackBar.open("You must be logged in!", "OK", {
-      duration: 5000,
+    this.snackBar.open("You must be logged in", "OK", {
+      duration: 3000,
     });
 
     return this.snackBar._openedSnackBarRef
@@ -20,9 +20,9 @@ export class SnackService {
       .subscribe();
   }
 
-  boardUpdated() {
-    this.snackBar.open("Board updated!", "OK", {
-      duration: 1000,
+  message(msg: string) {
+    this.snackBar.open(msg, "OK", {
+      duration: 3000,
     });
   }
 }

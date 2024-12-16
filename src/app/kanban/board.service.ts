@@ -32,7 +32,7 @@ export class BoardService {
   // user
   constructor() {
     this.boardCollectionRef = collection(this.firestore, "boards");
-    this.authService.authState$.subscribe((user) => {
+    this.authService.user$.subscribe((user) => {
       if (user) {
         this.currentUser = user;
         // get documents (data) from the collection using collectionData

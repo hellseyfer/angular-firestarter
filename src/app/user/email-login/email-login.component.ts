@@ -5,6 +5,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { AuthService } from "src/app/services/auth.service";
+import { SnackService } from "src/app/services/snack.service";
 
 @Component({
   selector: "app-email-login",
@@ -21,7 +22,8 @@ export class EmailLoginComponent implements OnInit {
 
   constructor(
     private afAuth: AuthService,
-    private fb: UntypedFormBuilder
+    private fb: UntypedFormBuilder,
+    private snack: SnackService
   ) {}
 
   ngOnInit() {
@@ -85,7 +87,8 @@ export class EmailLoginComponent implements OnInit {
         this.serverMessage = "Check your email";
       }
     } catch (err) {
-      this.serverMessage = err;
+      this.serverMessage = err.message;
+      this.snack.message("Error: " + err.message);
     }
 
     this.loading = false;

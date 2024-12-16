@@ -20,11 +20,13 @@ export class ShellComponent {
 
   user: User | null = null;
   constructor(
-    private breakpointObserver: BreakpointObserver,
-    public afAuth: AuthService
+    private readonly breakpointObserver: BreakpointObserver,
+    public authService: AuthService
   ) {
-    this.afAuth.authState$.subscribe({
-      next: (user) => (this.user = user),
+    this.authService.user$.subscribe({
+      next: (user) => {
+        this.user = user;
+      },
       error: (err) => console.log(err),
     });
   }

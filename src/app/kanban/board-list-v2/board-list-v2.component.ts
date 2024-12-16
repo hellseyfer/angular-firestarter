@@ -27,13 +27,11 @@ export class BoardListV2Component implements OnDestroy {
   sub: Subscription;
   private boardService = inject(BoardService);
   private dialog = inject(MatDialog);
-  private snackBarService = inject(SnackService);
 
   constructor() {
     this.sub = this.boardService.boards$.subscribe({
       next: (boards) => {
         this.boards = boards;
-        this.snackBarService.boardUpdated();
       },
       error: (err) => console.log(err),
     });
