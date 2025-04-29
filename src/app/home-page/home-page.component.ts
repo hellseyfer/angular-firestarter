@@ -33,7 +33,7 @@ export class HomePageComponent {
         campaignId.getCampaignIdAsync.toString()
       );
     } catch (error) {
-      console.error("Error fetching store items:", error);
+      console.error("Error fetching store itemsss:", error);
     }
   }
 }
