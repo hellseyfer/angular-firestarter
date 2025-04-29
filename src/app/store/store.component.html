@@ -1,0 +1,19 @@
+<div class="container">
+    <h1>Store Items</h1>
+    <div class="product-container">
+        <div class="product-card" *ngFor="let item of storeItems">
+            <div class="product-header">
+                <h2>{{ item.Title }}</h2>
+                <p>{{ item.ProductKind }}</p>
+            </div>
+            <div class="product-body">
+                <p class="price">{{ item.Price }}</p>
+                <p *ngIf="item.InCollection" class="in-collection">In Collection</p>
+                <p *ngIf="!item.InCollection" class="not-in-collection">Not in Collection</p>
+            </div>
+            <div class="product-footer">
+                <button class="buy-btn">Buy Now</button>
+            </div>
+        </div>
+    </div>
+</div>

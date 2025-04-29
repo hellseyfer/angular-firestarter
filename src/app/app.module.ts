@@ -19,9 +19,15 @@ import { getAuth, provideAuth } from "@angular/fire/auth";
 import { getFirestore, provideFirestore } from "@angular/fire/firestore";
 import { PrivacyPolicyComponent } from "./privacy-policy/privacy-policy.component";
 import { HttpClientModule } from "@angular/common/http";
+import { StoreComponent } from "./store/store.component";
 
 @NgModule({
-  declarations: [AppComponent, HomePageComponent, PrivacyPolicyComponent],
+  declarations: [
+    AppComponent,
+    HomePageComponent,
+    PrivacyPolicyComponent,
+    StoreComponent,
+  ],
   imports: [
     BrowserModule.withServerTransition({ appId: "serverApp" }),
     HttpClientModule,
